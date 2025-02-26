@@ -10,6 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <!-- Font Awesome Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- Splide.js para el carrusel -->
+    <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <style>
         body {
@@ -121,6 +123,89 @@
         .toggle-map-btn:hover {
             background-color: rgb(58, 15, 19);
         }
+        
+        /* Estilos para el carrusel */
+        .carousel-container {
+            margin-top: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        /* Modificación clave: altura automática para el contenedor de la imagen */
+        .splide__slide {
+            height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(78, 20, 27, 0.05);
+            border-radius: 8px;
+        }
+        
+        /* Modificación de la imagen para que se ajuste correctamente */
+        .splide__slide img {
+            width: 100%;
+            max-height: 70vh; /* Altura máxima relativa a la ventana */
+            object-fit: contain; /* Mantiene la proporción sin recortar */
+            border-radius: 8px;
+        }
+        
+        .splide__arrow {
+            background: rgba(78, 20, 27, 0.8);
+            opacity: 1;
+        }
+        .splide__arrow svg {
+            fill: #fff;
+        }
+        .splide__pagination__page.is-active {
+            background: rgb(78, 20, 27);
+        }
+        
+        /* Media query para ajustar en pantallas grandes */
+        @media (min-width: 992px) {
+            .carousel-container {
+                width: 85%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            /* Mantiene el aspecto centralizado en pantallas grandes */
+            .splide__slide {
+                padding: 20px 0;
+            }
+        }
+        
+        /* Estilos para el horario */
+        .horario-section {
+            margin: 40px 0;
+            text-align: center;
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(219, 204, 171, 0.8), rgba(209, 188, 141, 0.8));
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .horario-section h3 {
+            font-family: 'Playfair Display', serif;
+            color: rgb(78, 20, 27);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+        .horario-info {
+            display: inline-block;
+            padding: 15px 30px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            border-left: 5px solid rgb(78, 20, 27);
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: rgb(78, 20, 27);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        .horario-icon {
+            margin-right: 10px;
+            font-size: 1.4rem;
+        }
     </style>
 </head>
 <body>
@@ -132,6 +217,47 @@
     <header class="text-center py-3">
         <h1 class="titulo-restaurante">Areperia El Jefe</h1>
     </header>
+    
+    <!-- Carrusel de imágenes -->
+    <div class="container">
+        <div class="carousel-container">
+            <div class="splide" id="food-carousel">
+                <div class="splide__track">
+                    <ul class="splide__list">
+                        <li class="splide__slide">
+                            <img src="arepa1.png" alt="Arepa tradicional" />
+                        </li>
+                        <li class="splide__slide">
+                            <img src="arepa2.png" alt="Arepa rellena de carne" />
+                        </li>
+                        <li class="splide__slide">
+                            <img src="arepa3.png" alt="Arepa con queso" />
+                        </li>
+                        <li class="splide__slide">
+                            <img src="arepa4.png" alt="Arepa especial El Jefe" />
+                        </li>
+                        <li class="splide__slide">
+                            <img src="arepa5.png" alt="Combo de arepas" />
+                        </li>
+                        <li class="splide__slide">
+                            <img src="arepa.png" alt="Bebidas y arepas" />
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Sección de horario -->
+    <div class="container">
+        <div class="horario-section">
+            <h3><i class="far fa-clock horario-icon"></i> HORARIO DE ATENCIÓN</h3>
+            <div class="horario-info">
+                <i class="fas fa-utensils horario-icon"></i> Lunes a Domingo: 5:00 PM - 11:00 PM
+            </div>
+        </div>
+    </div>
+    
     <!-- Contenido principal -->
     <main class="container py-5">
         <div class="row g-4">
@@ -192,7 +318,7 @@
             </div>
             <br>
 
-                       <!-- Mapa 3: Cra. 6A # 5854 -->
+            <!-- Mapa 3: Cra. 6A # 5854 -->
             <div class="map-container" id="map3">
                 <h4>Cra. 6A # 5854 </h4>
                 <iframe 
@@ -223,9 +349,44 @@
             </div>
         </div>
     </footer>
-    <!-- Bootstrap JS (opcional) -->
+    
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Splide.js para el carrusel -->
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
     <script>
+        // Inicialización del carrusel
+        document.addEventListener('DOMContentLoaded', function() {
+            new Splide('#food-carousel', {
+                type: 'loop',
+                perPage: 1,
+                autoplay: true,
+                interval: 4000,
+                pauseOnHover: true,
+                pagination: true,
+                arrows: true,
+                lazyLoad: 'nearby',
+                heightRatio: 0.5625, // Proporciona una relación de aspecto (16:9) como referencia
+                updateOnMove: true,
+                // Deshabilitar la altura fija
+                fixedHeight: 0,
+                fixedWidth: 0,
+                breakpoints: {
+                    768: {
+                        arrows: false,
+                        heightRatio: 0.75 // Mayor altura para móviles
+                    }
+                },
+                classes: {
+                    arrows: 'splide__arrows custom-arrows',
+                    arrow: 'splide__arrow custom-arrow',
+                    pagination: 'splide__pagination custom-pagination',
+                },
+                speed: 800,
+                easing: 'cubic-bezier(0.25, 1, 0.5, 1)',
+            }).mount();
+        });
+
         // Función para mostrar/ocultar mapas
         document.getElementById('toggleMapBtn').addEventListener('click', function () {
             const maps = document.querySelectorAll('.map-container');
