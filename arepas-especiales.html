@@ -78,8 +78,6 @@
         .social-icons a:hover {
             color: rgb(58, 15, 19); /* Cambio de color al pasar el mouse */
         }
-
-        /* Estilos específicos para el formulario compacto */
         .quantity-selector {
             display: flex;
             align-items: center;
@@ -101,8 +99,6 @@
         .quantity-selector button:hover {
             background-color: rgb(58, 15, 19);
         }
-
-        /* Estilos específicos para el menú */
         .menu-card {
             background: linear-gradient(135deg, #fff, #f8f4e3);
             border: 2px solid rgb(78, 20, 27);
@@ -190,6 +186,28 @@
                     <label for="cantidad-bebida" class="form-label">Cantidad:</label>
                     <input type="number" class="form-control" id="cantidad-bebida" min="1" max="20" value="1">
                     <button type="button" class="btn btn-custom" id="add-bebida">Agregar</button>
+                </div>
+
+                <!-- Nuevos campos: Dirección, Nombre, Teléfono, Forma de Pago -->
+                <div class="mb-3">
+                    <label for="direccion" class="form-label">Dirección:</label>
+                    <input type="text" class="form-control" id="direccion" placeholder="Ej: Carrera 69 #51-24" required>
+                </div>
+                <div class="mb-3">
+                    <label for="nombre" class="form-label">Nombre:</label>
+                    <input type="text" class="form-control" id="nombre" placeholder="Felipe" required>
+                </div>
+                <div class="mb-3">
+                    <label for="telefono" class="form-label">Teléfono:</label>
+                    <input type="tel" class="form-control" id="telefono" placeholder="Ej: 3182198523" pattern="[0-9]*" inputmode="numeric" required>
+                </div>
+                <div class="mb-3">
+                    <label for="pago" class="form-label">Forma de Pago:</label>
+                    <select class="form-select" id="pago" required>
+                        <option value="" disabled selected>Selecciona una opción</option>
+                        <option value="Efectivo">Efectivo</option>
+                        <option value="Transferencia">Transferencia</option>
+                    </select>
                 </div>
 
                 <!-- Resumen del pedido -->
@@ -306,7 +324,7 @@
     <!-- Footer -->
     <footer>
         <div class="text-center py-3">
-            <p>&copy; 2025 Areperia El Jefe. Todos los derechos reservados.</p>
+            <p>© 2025 Areperia El Jefe. Todos los derechos reservados.</p>
             <div class="social-icons">
                 <a href="https://www.instagram.com/arepas.eljefe/" class="me-3"><i class="fab fa-instagram"></i></a>
                 <a href="https://www.tiktok.com/@arepas.eljefe"><i class="fab fa-tiktok"></i></a>
@@ -414,6 +432,11 @@
             updateOrderSummary();
         }
 
+        // Restringir el campo de teléfono a solo números
+        document.getElementById('telefono').addEventListener('input', function (e) {
+            this.value = this.value.replace(/[^0-9]/g, ''); // Elimina cualquier carácter que no sea número
+        });
+
         // Enviar el pedido por WhatsApp
         document.getElementById('menu-form').addEventListener('submit', function (event) {
             event.preventDefault(); // Evitar que el formulario se envíe
@@ -421,11 +444,28 @@
                 alert("Por favor, agrega al menos un ítem al pedido.");
                 return;
             }
+
+            // Obtener valores de los nuevos campos
+            const direccion = document.getElementById('direccion').value;
+            const nombre = document.getElementById('nombre').value;
+            const telefono = document.getElementById('telefono').value;
+            const pago = document.getElementById('pago').value;
+
+            if (!direccion || !nombre || !telefono || !pago) {
+                alert("Por favor, completa todos los campos: dirección, nombre, teléfono y forma de pago.");
+                return;
+            }
+
             // Crear el mensaje de WhatsApp
             let mensaje = `¡Hola! Quiero hacer un pedido:\n\n`;
             orderSummary.forEach(item => {
                 mensaje += `- ${item.name} x${item.quantity}\n`;
             });
+            mensaje += `\nDirección: ${direccion}\n`;
+            mensaje += `Nombre: ${nombre}\n`;
+            mensaje += `Teléfono: ${telefono}\n`;
+            mensaje += `Forma de Pago: ${pago}`;
+
             // Número de WhatsApp
             const numeroWhatsApp = '+573134577990';
             // Crear y abrir el enlace de WhatsApp
