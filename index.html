@@ -15,113 +15,202 @@
     <!-- Custom CSS -->
     <style>
         body {
-            background-color: #dbccab; /* Fondo claro */
+            background-color: #dbccab;
             font-family: 'Roboto', sans-serif;
-            color: #333; /* Texto oscuro */
+            color: #333;
             display: flex;
             flex-direction: column;
-            min-height: 100vh; /* Asegura que el body ocupe toda la altura de la pantalla */
+            min-height: 100vh;
         }
         .logo-container img {
             display: block;
             margin: 0 auto;
             max-width: 200px;
             margin-top: 20px;
+            transition: transform 0.3s ease;
+        }
+        .logo-container img:hover {
+            transform: scale(1.05);
         }
         .titulo-restaurante {
             font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            color: rgb(78, 20, 27); /* Rojo oscuro */
+            font-size: 3rem;
+            color: rgb(78, 20, 27);
             text-align: center;
             margin-top: 10px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            position: relative;
+            display: inline-block;
+        }
+        .titulo-restaurante::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(to right, transparent, rgb(78, 20, 27), transparent);
+        }
+        .navbar {
+            background: rgba(255, 255, 255, 0.95) !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+        }
+        .navbar .nav-link {
+            color: rgb(78, 20, 27) !important;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 1rem;
+        }
+        .navbar .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: rgb(78, 20, 27);
+            transition: width 0.3s ease;
+        }
+        .navbar .nav-link:hover::after {
+            width: 80%;
         }
         .card {
-            background: linear-gradient(135deg, rgb(219, 204, 171), hsl(41, 40%, 76%)); /* Degradado personalizado */
+            background: linear-gradient(135deg, rgb(219, 204, 171), hsl(41, 40%, 76%));
             border: none;
             border-radius: 15px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease-in-out;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            overflow: hidden;
         }
         .card:hover {
             transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        .card-img-top {
+            transition: transform 0.3s ease;
+        }
+        .card:hover .card-img-top {
+            transform: scale(1.05);
         }
         .card-body {
-            border: 1px solid rgba(0, 0, 0, 0.1); /* Borde sutil */
-            border-radius: 10px; /* Radio del borde */
-            padding: 20px; /* Espaciado interno */
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
         }
-        .card-title {
-            font-size: 1.5rem;
-            color: rgb(78, 20, 27); /* Rojo oscuro */
-        }
-        .card-text {
-            color: rgb(78, 20, 27); /* Rojo oscuro */
-        }
-        .btn-primary {
-            background-color: rgb(78, 20, 27); /* Rojo oscuro */
-            border: none;
-            border-radius: 25px;
-            padding: 10px 20px;
-            font-weight: 500;
-            transition: background-color 0.3s ease-in-out;
-        }
-        .btn-primary:hover {
-            background-color: rgb(58, 15, 19); /* Rojo más oscuro */
-        }
-        main {
-            flex: 1; /* Empuja el footer hacia abajo */
-        }
-        footer {
-            background: linear-gradient(135deg, rgb(78, 20, 27), hsl(41, 40%, 76%)); /* Degradado rojo */
-            color: white;
-            padding: 20px 0;
-            text-align: center;
-        }
-        .social-icons a {
-            color: #f8f4e3; /* Texto blanco para iconos */
-            font-size: 2rem; /* Iconos más grandes */
-            margin: 0 10px;
-            transition: color 0.3s ease-in-out;
-        }
-        .social-icons a:hover {
-            color: rgb(58, 15, 19); /* Cambio de color al pasar el mouse */
-        }
-        /* Estilos para la sección de contacto */
-        .contact-section {
-            margin-top: 40px;
-            text-align: center;
+        .menu-title {
+            font-size: 2rem;
             color: rgb(78, 20, 27);
-        }
-        .contact-section h3 {
-            font-size: 1.8rem;
+            text-align: center;
             margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
         }
-        .contact-section p {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
+        .menu-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(to right, transparent, rgb(78, 20, 27), transparent);
         }
-        .map-container {
-            margin-top: 20px;
-            height: 400px;
-            width: 100%;
-            display: none; /* Mapas ocultos por defecto */
+        .horario-section {
+            background: linear-gradient(135deg, rgba(219, 204, 171, 0.9), rgba(209, 188, 141, 0.9));
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin: 40px 0;
+            position: relative;
+            overflow: hidden;
         }
-        .map-container.show {
-            display: block; /* Mostrar mapas cuando esté activo */
+        .horario-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, rgb(78, 20, 27), rgb(145, 90, 96));
+        }
+        .horario-info {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+        .horario-info:hover {
+            transform: translateY(-5px);
+        }
+        .contact-section {
+            background: linear-gradient(135deg, rgba(219, 204, 171, 0.8), rgba(209, 188, 141, 0.8));
+            padding: 40px 0;
+            border-radius: 20px;
+            margin: 40px 0;
         }
         .toggle-map-btn {
-            margin-top: 10px;
-            background-color: rgb(78, 20, 27);
+            background: linear-gradient(135deg, rgb(78, 20, 27), rgb(145, 90, 96));
             border: none;
             color: white;
-            padding: 10px 20px;
+            padding: 12px 25px;
             border-radius: 25px;
             cursor: pointer;
-            transition: background-color 0.3s ease-in-out;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
         .toggle-map-btn:hover {
-            background-color: rgb(58, 15, 19);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+        .map-container {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+        }
+        footer {
+            background: linear-gradient(135deg, rgb(78, 20, 27), rgb(145, 90, 96));
+            color: white;
+            padding: 30px 0;
+            position: relative;
+        }
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, rgb(145, 90, 96), rgb(78, 20, 27));
+        }
+        .social-icons a {
+            color: white;
+            font-size: 1.8rem;
+            margin: 0 15px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .social-icons a:hover {
+            color: rgb(219, 204, 171);
+            transform: translateY(-5px);
+        }
+        @media (max-width: 768px) {
+            .titulo-restaurante {
+                font-size: 2.2rem;
+            }
+            .menu-title {
+                font-size: 1.8rem;
+            }
+            .horario-section {
+                padding: 20px;
+            }
         }
         
         /* Estilos para el carrusel */
@@ -131,24 +220,77 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
             border-radius: 15px;
             overflow: hidden;
+            position: relative;
         }
         
-        /* Modificación clave: altura automática para el contenedor de la imagen */
         .splide__slide {
+            position: relative;
             height: auto;
             display: flex;
             align-items: center;
             justify-content: center;
             background-color: rgba(78, 20, 27, 0.05);
             border-radius: 8px;
+            overflow: hidden;
         }
         
-        /* Modificación de la imagen para que se ajuste correctamente */
+        .slide-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            padding: 20px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .splide__slide:hover .slide-caption {
+            transform: translateY(0);
+        }
+        
+        .slide-caption h3 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .slide-caption p {
+            font-size: 1rem;
+            margin: 0;
+            opacity: 0.9;
+        }
+        
         .splide__slide img {
             width: 100%;
-            max-height: 70vh; /* Altura máxima relativa a la ventana */
-            object-fit: contain; /* Mantiene la proporción sin recortar */
-            border-radius: 8px;
+            max-height: 70vh;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .splide__slide:hover img {
+            transform: scale(1.05);
+        }
+        
+        .horario-descripcion {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            display: inline-block;
+        }
+        
+        .horario-descripcion p {
+            margin: 5px 0;
+            color: rgb(78, 20, 27);
+            font-weight: 500;
+        }
+        
+        .horario-icon {
+            margin-right: 10px;
+            font-size: 1.4rem;
+            color: rgb(78, 20, 27);
         }
         
         .splide__arrow {
@@ -175,37 +317,6 @@
                 padding: 20px 0;
             }
         }
-        
-        /* Estilos para el horario */
-        .horario-section {
-            margin: 40px 0;
-            text-align: center;
-            padding: 25px;
-            background: linear-gradient(135deg, rgba(219, 204, 171, 0.8), rgba(209, 188, 141, 0.8));
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-        .horario-section h3 {
-            font-family: 'Playfair Display', serif;
-            color: rgb(78, 20, 27);
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-        }
-        .horario-info {
-            display: inline-block;
-            padding: 15px 30px;
-            background-color: rgba(255, 255, 255, 0.3);
-            border-radius: 10px;
-            border-left: 5px solid rgb(78, 20, 27);
-            font-size: 1.2rem;
-            font-weight: 500;
-            color: rgb(78, 20, 27);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        }
-        .horario-icon {
-            margin-right: 10px;
-            font-size: 1.4rem;
-        }
     </style>
 </head>
 <body>
@@ -226,21 +337,45 @@
                     <ul class="splide__list">
                         <li class="splide__slide">
                             <img src="arepa1.png" alt="Arepa tradicional" />
+                            <div class="slide-caption">
+                                <h3>Arepas Tradicionales</h3>
+                                <p>El sabor auténtico de Colombia</p>
+                            </div>
                         </li>
                         <li class="splide__slide">
                             <img src="arepa2.png" alt="Arepa rellena de carne" />
+                            <div class="slide-caption">
+                                <h3>Arepas Rellenas</h3>
+                                <p>Una explosión de sabores</p>
+                            </div>
                         </li>
                         <li class="splide__slide">
                             <img src="arepa3.png" alt="Arepa con queso" />
+                            <div class="slide-caption">
+                                <h3>Arepas con Queso</h3>
+                                <p>La combinación perfecta</p>
+                            </div>
                         </li>
                         <li class="splide__slide">
                             <img src="arepa4.png" alt="Arepa especial El Jefe" />
+                            <div class="slide-caption">
+                                <h3>Especial El Jefe</h3>
+                                <p>Nuestra creación insignia</p>
+                            </div>
                         </li>
                         <li class="splide__slide">
                             <img src="arepa5.png" alt="Combo de arepas" />
+                            <div class="slide-caption">
+                                <h3>Combos Especiales</h3>
+                                <p>Para compartir y disfrutar</p>
+                            </div>
                         </li>
                         <li class="splide__slide">
                             <img src="arepa.png" alt="Bebidas y arepas" />
+                            <div class="slide-caption">
+                                <h3>Bebidas Refrescantes</h3>
+                                <p>El complemento perfecto</p>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -248,12 +383,16 @@
         </div>
     </div>
     
-    <!-- Sección de horario -->
+    <!-- Sección de horario con animación -->
     <div class="container">
         <div class="horario-section">
             <h3><i class="far fa-clock horario-icon"></i> HORARIO DE ATENCIÓN</h3>
             <div class="horario-info">
                 <i class="fas fa-utensils horario-icon"></i> Lunes a Domingo: 5:00 PM - 11:00 PM
+            </div>
+            <div class="horario-descripcion">
+                <p>¡Te esperamos con las mejores arepas de Ibagué!</p>
+                <p>Servicio a domicilio disponible</p>
             </div>
         </div>
     </div>
